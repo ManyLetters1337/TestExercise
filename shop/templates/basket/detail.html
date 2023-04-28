@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% load static %}
+ 
+{% block title %}
+    Your shopping cart
+{% endblock %}
+ 
+{% block content %}
+    {% for item in basket %}
+        {% with product=item.product %}
+            {{ product.name }}
+            <a href="{% url "basket:basket_remove" product.id %}">Remove</a>
+            <{{ product.price }}</td>
+        {% endwith %}
+    {% endfor %}
+    <p class="text-right">
+        <a href="{% url "product:product_list" %}" class="button light">Continue
+            shopping</a>
+        <a href="#" class="button">Checkout</a>
+    </p>
+
+    <form action="." method="post" class="order-form">
+        {{ form.as_p }}
+        <p><input type="submit" value="Place order"></p>
+        {% csrf_token %}
+    </form>
+{% endblock %}  
